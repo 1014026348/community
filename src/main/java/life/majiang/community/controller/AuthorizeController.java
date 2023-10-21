@@ -1,14 +1,12 @@
 package life.majiang.community.controller;
 
 import life.majiang.community.model.User;
-import life.majiang.community.provider.GithubProvider;
 import life.majiang.community.service.UserService;
 import life.majiang.community.strategy.LoginUserInfo;
 import life.majiang.community.strategy.UserStrategy;
 import life.majiang.community.strategy.UserStrategyFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,18 +26,6 @@ public class AuthorizeController {
 
     @Autowired
     private UserStrategyFactory userStrategyFactory;
-
-    @Autowired
-    private GithubProvider githubProvider;
-
-    @Value("${github.client.id}")
-    private String clientId;
-
-    @Value("${github.client.secret}")
-    private String clientSecret;
-
-    @Value("${github.redirect.uri}")
-    private String redirectUri;
 
     @Autowired
     private UserService userService;
@@ -67,7 +53,7 @@ public class AuthorizeController {
             response.addCookie(cookie);
             return "redirect:/";
         } else {
-            log.error("callback get github error,{}", loginUserInfo);
+            log.error("callback get gitee error,{}", loginUserInfo);
             // 登录失败，重新登录
             return "redirect:/";
         }
